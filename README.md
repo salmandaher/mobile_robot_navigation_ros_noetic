@@ -321,7 +321,7 @@ The system includes pre-configured RViz settings showing:
 
 ## Author Information
 
-**Student:** [Your Name]  
+**Students:** Ammar Daher - Salman Daher - Naya Yousef - Mohammad Saood   
 **Course:** Embedded Systems Design  
 **Instructor:** م. باهر خير بك  
 **University:** Manara University  
