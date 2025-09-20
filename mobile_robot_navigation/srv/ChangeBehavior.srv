@@ -1,0 +1,11 @@
+# ChangeBehavior.srv  
+# Service to change robot behavior mode
+
+# Request
+string behavior_mode          # New behavior mode (wall_follow, obstacle_avoid, go_to_goal)
+geometry_msgs/Point target    # Target point (for go_to_goal mode)
+---
+# Response
+bool success                  # True if behavior change was successful
+string message                # Status message
+string previous_mode          # Previous behavior mode

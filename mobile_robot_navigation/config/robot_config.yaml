@@ -1,0 +1,53 @@
+# Mobile Robot Navigation Configuration
+
+# Robot physical parameters
+robot:
+  wheel_radius: 0.065          # meters
+  wheel_separation: 0.25       # meters
+  max_linear_speed: 0.5        # m/s
+  max_angular_speed: 1.0       # rad/s
+
+# Sensor parameters
+sensors:
+  ultrasonic:
+    max_range: 40.0            # meters
+    min_range: 0.04           # meters
+    noise_std: 0.02           # standard deviation of noise
+    field_of_view: 0.26       # radians (~15 degrees)
+    update_rate: 10           # Hz
+
+# Control parameters
+control:
+  obstacle_threshold: 0.5     # meters
+  wall_follow_distance: 0.3   # meters
+  goal_tolerance: 0.1         # meters
+  control_frequency: 10       # Hz
+
+# Navigation behaviors
+behaviors:
+  obstacle_avoid:
+    enabled: true
+    turn_speed_factor: 0.7    # Factor for turning speed when avoiding obstacles
+
+  wall_follow:
+    enabled: true
+    kp: 2.0                   # Proportional gain for wall following
+    preferred_side: "left"    # Which wall to follow
+
+  go_to_goal:
+    enabled: true
+    position_tolerance: 0.1   # meters
+    angle_tolerance: 0.1      # radians
+
+# Simulation parameters
+simulation:
+  publish_rate: 20            # Hz for rosserial mock
+  battery_initial: 12.0       # Initial battery voltage
+  battery_discharge_rate: 0.001  # Discharge rate per unit power consumption
+  encoder_ticks_per_rev: 360  # Encoder resolution
+
+# Visualization
+visualization:
+  path_buffer_length: 1000    # Maximum number of path points to store
+  tf_publish_rate: 50         # Hz
+  marker_lifetime: 1.0        # seconds

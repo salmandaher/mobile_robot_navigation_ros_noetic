@@ -1,0 +1,9 @@
+# ResetPosition.srv
+# Service to reset robot position
+
+# Request
+geometry_msgs/Pose2D new_pose  # New position and orientation
+---
+# Response  
+bool success                   # True if reset was successful
+string message                 # Status message

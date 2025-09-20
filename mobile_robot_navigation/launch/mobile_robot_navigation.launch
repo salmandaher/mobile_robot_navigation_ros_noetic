@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Launch file arguments -->
+    <arg name="use_rviz" default="true"/>
+    <arg name="use_cpp_nodes" default="false"/>
+    <arg name="robot_description_file" default="$(find mobile_robot_navigation)/urdf/mobile_robot.xacro"/>
+
+    <!-- Load robot description -->
+    <param name="robot_description" command="$(find xacro)/xacro $(arg robot_description_file)"/>
+
+    <!-- Robot state publisher -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+        <param name="publish_frequency" type="double" value="30.0"/>
+    </node>
+
+    <!-- Joint state publisher GUI (for manual joint control) -->
+    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" 
+          if="$(eval arg('use_rviz'))">
+        <param name="use_gui" value="true"/>
+    </node>
+
+    <!-- TF publisher (simulates odometry) -->
+    <node name="tf_publisher" pkg="mobile_robot_navigation" type="tf_publisher.py" output="screen"/>
+
+    <!-- Sensor data publisher -->
+        <node name="sensor_data_publisher" pkg="mobile_robot_navigation" type="sensor_data_publisher.py" output="screen">
+            <param name="max_range" value="4.0"/>
+            <param name="min_range" value="0.04"/>
+            <param name="noise_std" value="0.02"/>
+            <param name="publish_rate" value="10"/>
+        </node>
+
+    <!-- Robot controller -->
+        <node name="robot_navigation_controller" pkg="mobile_robot_navigation" type="robot_navigation_controller.py" output="screen">
+            <param name="max_linear_speed" value="0.5"/>
+            <param name="max_angular_speed" value="1.0"/>
+            <param name="obstacle_threshold" value="0.5"/>
+            <param name="wall_follow_distance" value="0.3"/>
+            <param name="goal_tolerance" value="0.1"/>
+        </node>
+
+
+    <!-- Rosserial mock (Arduino simulation) -->
+        <node name="rosserial_mock" pkg="mobile_robot_navigation" type="rosserial_mock.py" output="screen"/>
+
+
+
+    <!-- RViz visualization -->
+    <node if="$(arg use_rviz)" name="rviz" pkg="rviz" type="rviz" 
+          args="-d $(find mobile_robot_navigation)/rviz/mobile_robot_navigation.rviz" output="screen"/>
+
+</launch>
